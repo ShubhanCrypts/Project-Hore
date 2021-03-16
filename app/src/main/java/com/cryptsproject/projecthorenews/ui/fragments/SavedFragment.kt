@@ -7,6 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.cryptsproject.projecthorenews.R
 
-class SavedFragment : Fragment() {
+class SavedFragment : Fragment(R.layout.fragment_saved) {
 
 }

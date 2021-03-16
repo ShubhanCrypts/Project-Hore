@@ -7,6 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.cryptsproject.projecthorenews.R
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 }
