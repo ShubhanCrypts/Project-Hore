@@ -3,6 +3,7 @@ package com.cryptsproject.projecthorenews.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -24,5 +25,12 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(MainViewModel::class.java)
 
         bottomNavigation.setupWithNavController(activityNavFragment.findNavController())
+        activityNavFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.loginFragment2 || destination.id == R.id.signupFragment2){
+                bottomNavigation.visibility = View.GONE
+            }else{
+                bottomNavigation.visibility = View.VISIBLE
+            }
+        }
     }
 }
