@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cryptsproject.projecthorenews.R
 //import com.cryptsproject.projecthorenews.databinding.FragmentLoginBinding
-import com.cryptsproject.projecthorenews.ui.LoginActivity
 import com.cryptsproject.projecthorenews.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -40,16 +39,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        btnLogin.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
+//        btnLogin.setOnClickListener {
+//            val intent = Intent(activity, MainActivity::class.java)
+//            startActivity(intent)
+//            activity?.finish()
+//        }
 
-        tvSignup.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+        btnLogin.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
             findNavController().navigate(action)
         }
+
+
+//        tvSignup.setOnClickListener {
+//            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+//            findNavController().navigate(action)
+//        }
 
     }
 

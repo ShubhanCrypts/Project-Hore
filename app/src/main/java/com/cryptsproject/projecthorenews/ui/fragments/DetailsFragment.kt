@@ -7,6 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.cryptsproject.projecthorenews.R
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(R.layout.fragment_details) {
 
 }

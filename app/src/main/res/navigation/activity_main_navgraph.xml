@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_navgraph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment2">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -23,4 +23,25 @@
         android:name="com.cryptsproject.projecthorenews.ui.fragments.SavedFragment"
         android:label="fragment_saved"
         tools:layout="@layout/fragment_saved" />
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.cryptsproject.projecthorenews.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@+id/activity_navgraph"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_loginFragment2_to_signupFragment2"
+            app:destination="@id/signupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment2"
+        android:name="com.cryptsproject.projecthorenews.ui.fragments.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" />
+
+
 </navigation>
