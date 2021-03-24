@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "842161758356",
+    "project_id": "project-hore-news",
+    "storage_bucket": "project-hore-news.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842161758356:android:456389f133e8156464d481",
+        "android_client_info": {
+          "package_name": "com.cryptsproject.projecthorenews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842161758356-go7ah9q59rqrhpncnmd2asn3akigne7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaEiIC9cb8-jvgEjjbrajgvYMz8dalSvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842161758356-go7ah9q59rqrhpncnmd2asn3akigne7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

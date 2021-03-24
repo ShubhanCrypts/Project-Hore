@@ -9,14 +9,36 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cryptsproject.projecthorenews.R
+//import com.cryptsproject.projecthorenews.databinding.FragmentLoginBinding
 import com.cryptsproject.projecthorenews.ui.LoginActivity
 import com.cryptsproject.projecthorenews.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+//    private var _binding : FragmentLoginBinding? = null
+//
+//    private val binding
+//        get() =_binding!!
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        return super.onCreateView(inflater, container, savedInstanceState)
+//        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+//        return binding.root
+//    }
+
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         btnLogin.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
@@ -28,8 +50,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
             findNavController().navigate(action)
         }
-
-
 
     }
 

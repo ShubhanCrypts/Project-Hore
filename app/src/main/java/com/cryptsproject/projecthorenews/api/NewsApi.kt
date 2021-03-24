@@ -17,4 +17,15 @@ interface NewsApi {
         apiKey : String = "4168c466b08a415a92a3ccd1ff51b42a"
     ): Response<NewsResponse>
 
+    @GET("v2/everything")
+    suspend fun searchForNews(
+        @Query("q")
+        searchQuery: String,
+        @Query("page")
+        pageNumber: Int = 1,
+        @Query("apiKey")
+        apiKey: String = "4168c466b08a415a92a3ccd1ff51b42a"
+
+    ): Response<NewsResponse>
+
 }
