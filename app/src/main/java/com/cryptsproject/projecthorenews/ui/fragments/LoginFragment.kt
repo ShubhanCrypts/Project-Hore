@@ -11,9 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.cryptsproject.projecthorenews.R
 //import com.cryptsproject.projecthorenews.databinding.FragmentLoginBinding
 import com.cryptsproject.projecthorenews.ui.MainActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
+
 
 //    private var _binding : FragmentLoginBinding? = null
 //
@@ -35,9 +37,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 //        _binding = null
 //    }
 
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        bottomNavigation.visibility = View.GONE
+//    }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+//        bottomNavigation.visibility = View.GONE
 
 //        btnLogin.setOnClickListener {
 //            val intent = Intent(activity, MainActivity::class.java)
@@ -50,11 +59,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             findNavController().navigate(action)
         }
 
+        tvSignup.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragment2ToSignupFragment2()
+            findNavController().navigate(action)
+        }
+
 
 //        tvSignup.setOnClickListener {
 //            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
 //            findNavController().navigate(action)
 //        }
+
+
 
     }
 
