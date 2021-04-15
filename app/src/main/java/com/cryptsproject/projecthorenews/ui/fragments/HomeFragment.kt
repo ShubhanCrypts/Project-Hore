@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cryptsproject.projecthorenews.R
@@ -29,6 +30,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         viewModel =(activity as MainActivity).viewModel
         setupRecyclerView()
+
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_homeFragment_to_detailsFragment,
+                bundle
+            )
+        }
 
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
