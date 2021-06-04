@@ -34,7 +34,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             "author" to newsArticle.author.toString(),
             "content" to newsArticle.content.toString(),
             "description" to newsArticle.description.toString(),
-            "publishedAt" to newsArticle.description.toString(),
+            "publishedAt" to newsArticle.publishedAt.toString(),
             "source.name" to newsArticle.source?.name.toString(),
             "source.id" to newsArticle.source?.id.toString(),
             "title" to newsArticle.title.toString(),

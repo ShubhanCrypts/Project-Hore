@@ -2,42 +2,102 @@ package com.cryptsproject.projecthorenews.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cryptsproject.projecthorenews.R
-import com.cryptsproject.projecthorenews.adapter.DummyAdapter
 import com.cryptsproject.projecthorenews.adapter.NewsAdapter
+import com.cryptsproject.projecthorenews.models.Article
 import com.cryptsproject.projecthorenews.models.ArticleDummy
+import com.cryptsproject.projecthorenews.models.Source
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_saved.*
 
 class SavedFragment : Fragment(R.layout.fragment_saved) {
 
+    lateinit var newsAdapter: NewsAdapter
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DummyAdapter()
-        val list = mutableListOf<ArticleDummy>()
-        rvSavedFragment.layoutManager = LinearLayoutManager(requireContext())
-        rvSavedFragment.adapter = adapter
+        setupRecyclerView()
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_savedFragment_to_detailsFragment,
+                bundle
+            )
+        }
+
+//        val adapter = NewsAdapter()
+        val list = mutableListOf<Article>()
+//        rvSavedFragment.layoutManager = LinearLayoutManager(requireContext())
+//        rvSavedFragment.adapter = adapter
 
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("news").get().addOnSuccessListener { querySnapshot ->
+        firestore.collection("newsss").get().addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->
+//                list.add(
+//                    ArticleDummy(
+//                        document.id,
+//                        document.getString("title") ?: "",
+//                        document.getString("desc") ?: ""
+//                    )
+//                )
+//                val source = hashMapOf(
+//                    document.getString("source.id")
+//                )
+
+//                val article = hashMapOf(
+//                    document.getString("author") to
+//                    document.getString("content") ?: "",
+//                    document.getString("description") ?: "",
+//                    document.getString("publishedAt") ?: "",
+//                    document.getString("source.id") ?: "",
+//                )
+
+//                val article = document.toObject<Article>()
+
+                val source = document.getString("source.id")?.let {
+                    Source(
+                        it,
+                        document.getString("source.name") ?: ""
+                        )
+                }
+
                 list.add(
-                    ArticleDummy(
-                        document.id,
+//                    document.toObject<Article>()
+
+                    Article(
+                        document.getString("author") ?: "",
+                        document.getString("content") ?: "",
+                        document.getString("description") ?: "",
+                        document.getString("publishedAt") ?: "",
+                        source,
                         document.getString("title") ?: "",
-                        document.getString("desc") ?: ""
+                        document.getString("url") ?: "",
+                        document.getString("urlToImage") ?: ""
+
                     )
                 )
             }
-            adapter.differ.submitList(list)
+            newsAdapter.differ.submitList(list)
         }
 
 
+    }
+
+    private fun setupRecyclerView(){
+        newsAdapter = NewsAdapter()
+        rvSavedFragment.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
     }
 
 
