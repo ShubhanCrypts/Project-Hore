@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.cryptsproject.projecthorenews.R
 import com.cryptsproject.projecthorenews.ui.MainActivity
 import com.cryptsproject.projecthorenews.ui.MainViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -19,13 +20,40 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val firestore = FirebaseFirestore.getInstance()
+
         viewModel = (activity as MainActivity).viewModel
         val newsArticle = args.article
         news_web_view.apply {
             webViewClient = WebViewClient()
             loadUrl(newsArticle.url)
         }
+
+        val article = hashMapOf(
+            "author" to newsArticle.author.toString(),
+            "content" to newsArticle.content.toString(),
+            "description" to newsArticle.description.toString(),
+            "publishedAt" to newsArticle.description.toString(),
+            "source.name" to newsArticle.source?.name.toString(),
+            "source.id" to newsArticle.source?.id.toString(),
+            "title" to newsArticle.title.toString(),
+            "url" to newsArticle.url,
+            "urlToImage" to newsArticle.urlToImage.toString()
+
+        )
+
+        fab.setOnClickListener {
+            firestore.collection("newsss").document().set(article)
+
+        }
+
+
     }
+
+
+
+
 
 
 

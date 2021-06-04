@@ -36,6 +36,8 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
             }
             adapter.differ.submitList(list)
         }
+
+
     }
 
 
