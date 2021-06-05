@@ -62,12 +62,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun loginUser(){
         val email : String = et_email_login.text.toString()
         val password :String = et_password_login.text.toString()
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
+        if(email.isNullOrEmpty() or password.isNullOrEmpty()){
+
+        }else{
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
+                    }
                 }
-            }
+        }
+
     }
 
 }

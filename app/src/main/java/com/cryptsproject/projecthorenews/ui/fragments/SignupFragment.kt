@@ -23,11 +23,16 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
     private fun signupUser(){
         val email: String = et_email.text.toString()
         val password: String = et_password.text.toString()
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    findNavController().navigate(R.id.action_signupFragment2_to_homeFragment)
+        if(email.isNullOrEmpty() or password.isNullOrEmpty()){
+
+        }else{
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        findNavController().navigate(R.id.action_signupFragment2_to_homeFragment)
+                    }
                 }
-            }
+        }
+
     }
 }
