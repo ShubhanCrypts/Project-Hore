@@ -34,7 +34,6 @@
             app:menu="@menu/bottom_nav_menu"
             app:labelVisibilityMode="unlabeled"/>
 
-
     </FrameLayout>
 
 

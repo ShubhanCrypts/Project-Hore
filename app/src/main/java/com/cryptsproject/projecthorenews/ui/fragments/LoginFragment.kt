@@ -40,21 +40,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 //        _binding = null
 //    }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        bottomNavigation.visibility = View.GONE
-//    }
-
+    override fun onStart() {
+        super.onStart()
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user != null){
+            findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        bottomNavigation.visibility = View.GONE
 
-        val user = Firebase.auth.currentUser
-        if(user != null){
-            findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
-        }
+
+
         btnLogin.setOnClickListener {
             loginUser()
         }
@@ -67,8 +67,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val action = LoginFragmentDirections.actionLoginFragment2ToSignupFragment2()
             findNavController().navigate(action)
         }
-
-
 
     }
 

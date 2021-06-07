@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     var namestring = FirebaseAuth.getInstance().currentUser?.displayName
     var profilepic = FirebaseAuth.getInstance().currentUser?.photoUrl
+    var email = FirebaseAuth.getInstance().currentUser?.email
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tv_Signout.setOnClickListener {
@@ -38,6 +39,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         displayName.setText(namestring)
+        displayEmail.setText(email)
 
         Picasso.with(requireContext()).load(profilepic).resize(150, 150).into(ivProfilePicture)
 
