@@ -42,27 +42,6 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("newsss").get().addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->
-//                list.add(
-//                    ArticleDummy(
-//                        document.id,
-//                        document.getString("title") ?: "",
-//                        document.getString("desc") ?: ""
-//                    )
-//                )
-//                val source = hashMapOf(
-//                    document.getString("source.id")
-//                )
-
-//                val article = hashMapOf(
-//                    document.getString("author") to
-//                    document.getString("content") ?: "",
-//                    document.getString("description") ?: "",
-//                    document.getString("publishedAt") ?: "",
-//                    document.getString("source.id") ?: "",
-//                )
-
-//                val article = document.toObject<Article>()
-
                 val source = document.getString("source.id")?.let {
                     Source(
                         it,
@@ -71,8 +50,6 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
                 }
 
                 list.add(
-//                    document.toObject<Article>()
-
                     Article(
                         document.getString("author") ?: "",
                         document.getString("content") ?: "",

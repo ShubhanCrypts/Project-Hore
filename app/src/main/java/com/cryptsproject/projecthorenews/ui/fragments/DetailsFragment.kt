@@ -1,5 +1,6 @@
 package com.cryptsproject.projecthorenews.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        detailActionBar.inflateMenu(R.menu.menu_detail)
+
         val firestore = FirebaseFirestore.getInstance()
 
         viewModel = (activity as MainActivity).viewModel
@@ -29,6 +33,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             webViewClient = WebViewClient()
             loadUrl(newsArticle.url)
         }
+
+        val link = newsArticle.url
+
 
         val article = hashMapOf(
             "author" to newsArticle.author.toString(),
@@ -43,9 +50,41 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         )
 
-        fab.setOnClickListener {
-            firestore.collection("newsss").document().set(article)
+//        fab.setOnClickListener {
+//            firestore.collection("newsss").document().set(article)
+//
+//        }
+//
+        fab_share.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, link)
+                type = "text/plain"
+            }
 
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
+        detailActionBar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.action_save -> {
+                    firestore.collection("newsss").document().set(article)
+                    true
+                }
+                R.id.action_share -> {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, link)
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+                    true
+                }
+                else -> false
+            }
         }
 
 
