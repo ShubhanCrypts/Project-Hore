@@ -55,16 +55,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 //
 //        }
 //
-        fab_share.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, link)
-                type = "text/plain"
-            }
-
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
-        }
+//        fab_share.setOnClickListener {
+//            val sendIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_TEXT, link)
+//                type = "text/plain"
+//            }
+//
+//            val shareIntent = Intent.createChooser(sendIntent, null)
+//            startActivity(shareIntent)
+//        }
 
         detailActionBar.setOnMenuItemClickListener {
             when(it.itemId){
