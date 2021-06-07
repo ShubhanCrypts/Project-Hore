@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.visibility = View.VISIBLE
             }
         }
+<<<<<<< HEAD
 
 //        val navController = this.findNavController(R.id.activity_main_navgraph)
 //        navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -45,5 +46,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
+=======
+>>>>>>> origin/login-register
     }
 }

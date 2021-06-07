@@ -20,7 +20,16 @@
         android:id="@+id/profileFragment"
         android:name="com.cryptsproject.projecthorenews.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment2"
+            app:destination="@id/loginFragment2"
+            app:popUpTo="@+id/profileFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/savedFragment"
         android:name="com.cryptsproject.projecthorenews.ui.fragments.SavedFragment"
@@ -38,7 +47,7 @@
         <action
             android:id="@+id/action_loginFragment2_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@+id/activity_navgraph"
+            app:popUpTo="@+id/homeFragment"
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loginFragment2_to_signupFragment2"
@@ -54,6 +63,7 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
+<<<<<<< HEAD
         android:id="@+id/detailsFragment"
         android:name="com.cryptsproject.projecthorenews.ui.fragments.DetailsFragment"
         android:label="fragment_details"
@@ -61,6 +71,15 @@
         <argument
             android:name="article"
             app:argType="com.cryptsproject.projecthorenews.models.Article" />
+=======
+        android:id="@+id/editProfileFragment"
+        android:name="com.cryptsproject.projecthorenews.ui.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+>>>>>>> origin/login-register
     </fragment>
 
 

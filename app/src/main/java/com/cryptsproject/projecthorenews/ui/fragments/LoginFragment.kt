@@ -11,7 +11,13 @@ import androidx.navigation.fragment.findNavController
 import com.cryptsproject.projecthorenews.R
 //import com.cryptsproject.projecthorenews.databinding.FragmentLoginBinding
 import com.cryptsproject.projecthorenews.ui.MainActivity
+<<<<<<< HEAD
 import kotlinx.android.synthetic.main.activity_main.*
+=======
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+>>>>>>> origin/login-register
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -48,15 +54,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
 //        bottomNavigation.visibility = View.GONE
 
-//        btnLogin.setOnClickListener {
-//            val intent = Intent(activity, MainActivity::class.java)
-//            startActivity(intent)
-//            activity?.finish()
-//        }
-
+        val user = Firebase.auth.currentUser
+        if(user != null){
+            findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
+        }
         btnLogin.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
-            findNavController().navigate(action)
+            loginUser()
+        }
+
+
+        tvSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment2_to_signupFragment2)
         }
 
         tvSignup.setOnClickListener {
@@ -65,10 +73,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
 
-//        tvSignup.setOnClickListener {
-//            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
-//            findNavController().navigate(action)
-//        }
+
+    }
+
+    private fun loginUser(){
+        val email : String = et_email_login.text.toString()
+        val password :String = et_password_login.text.toString()
+        if(email.isNullOrEmpty() or password.isNullOrEmpty()){
+
+        }else{
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        findNavController().navigate(R.id.action_loginFragment2_to_homeFragment)
+                    }
+                }
+        }
 
 
 
