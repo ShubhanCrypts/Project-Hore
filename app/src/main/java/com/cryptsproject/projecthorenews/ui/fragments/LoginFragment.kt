@@ -11,13 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.cryptsproject.projecthorenews.R
 //import com.cryptsproject.projecthorenews.databinding.FragmentLoginBinding
 import com.cryptsproject.projecthorenews.ui.MainActivity
-<<<<<<< HEAD
 import kotlinx.android.synthetic.main.activity_main.*
-=======
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
->>>>>>> origin/login-register
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -61,7 +58,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         btnLogin.setOnClickListener {
             loginUser()
         }
-
 
         tvSignup.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment2_to_signupFragment2)

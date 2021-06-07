@@ -63,7 +63,6 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-<<<<<<< HEAD
         android:id="@+id/detailsFragment"
         android:name="com.cryptsproject.projecthorenews.ui.fragments.DetailsFragment"
         android:label="fragment_details"
@@ -71,7 +70,8 @@
         <argument
             android:name="article"
             app:argType="com.cryptsproject.projecthorenews.models.Article" />
-=======
+    </fragment>
+    <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.cryptsproject.projecthorenews.ui.fragments.EditProfileFragment"
         android:label="fragment_edit_profile"
@@ -79,7 +79,6 @@
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
->>>>>>> origin/login-register
     </fragment>
 
 
