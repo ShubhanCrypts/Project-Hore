@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.cryptsproject.projecthorenews.R
 import com.cryptsproject.projecthorenews.ui.MainActivity
 import com.cryptsproject.projecthorenews.ui.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -26,6 +27,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         detailActionBar.inflateMenu(R.menu.menu_detail)
 
         val firestore = FirebaseFirestore.getInstance()
+
+        val userid = FirebaseAuth.getInstance().currentUser?.uid
 
         viewModel = (activity as MainActivity).viewModel
         val newsArticle = args.article
@@ -69,7 +72,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         detailActionBar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.action_save -> {
-                    firestore.collection("newsss").document().set(article)
+                    firestore.collection("$userid").document().set(article)
                     true
                 }
                 R.id.action_share -> {

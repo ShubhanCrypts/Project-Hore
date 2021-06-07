@@ -10,6 +10,7 @@ import com.cryptsproject.projecthorenews.adapter.NewsAdapter
 import com.cryptsproject.projecthorenews.models.Article
 import com.cryptsproject.projecthorenews.models.ArticleDummy
 import com.cryptsproject.projecthorenews.models.Source
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -40,7 +41,10 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
 //        rvSavedFragment.adapter = adapter
 
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("newsss").get().addOnSuccessListener { querySnapshot ->
+
+        val userid = FirebaseAuth.getInstance().currentUser?.uid
+
+        firestore.collection("$userid").get().addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->
                 val source = document.getString("source.id")?.let {
                     Source(
