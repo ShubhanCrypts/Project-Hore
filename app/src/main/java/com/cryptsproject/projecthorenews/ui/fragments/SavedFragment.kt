@@ -22,7 +22,7 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
 
     lateinit var newsAdapter: NewsAdapter
 
-    private fun actualityLevel(publishedAt : String) : Int {
+    private fun actualityScore(publishedAt : String) : Int {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val publishedTime = dateFormat.parse(publishedAt).time
         val currentTime = System.currentTimeMillis()
@@ -31,25 +31,40 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         return finalScore.toInt()
     }
 
-    private fun readingIntensity(user_id : String) : Int {
-        val firestore = FirebaseFirestore.getInstance()
-        val intensity = firestore.collection(user_id).document("intensity").get().data
-        // var intensity = mutableListOf(0)
-        val currentTime = System.currentTimeMillis().toInt()
+    private fun intensityScore(readingIntensity : MutableList<Int>, currentTime : Int) : Int {
         val millisInADay = 86400000
-        val intensityToday = intensity.count{it > currentTime-millisInADay}
-        if (intensityToday >= 20)
+        val intensityToday = readingIntensity.count{it > currentTime-millisInADay}
+        if (intensityToday > 20)
             return 0
-        intensity.removeIf{it < currentTime-7*millisInADay}
-        intensity.add(currentTime)
-        firestore.collection(user_id).document("intensity").set(intensity)
-        var finalScore = 0
         val historyPoints = arrayOf(5,4,3,3,2,2,1)
         val intensityPoints = arrayOf(10,10,10,9,9,9,8,8,8,7,7,6,6,5,5,4,4,3,2,1)
+        var finalScore = 0
         for (i in 0..6)
-            if (intensity.count{it/millisInADay == currentTime/millisInADay - i} > 0)
-                finalScore += historyPoints[i]*intensityPoints[intensityToday]
+            if (readingIntensity.count{it/millisInADay == currentTime/millisInADay - i} > 0)
+                finalScore += historyPoints[i]*intensityPoints[intensityToday-1]
         return finalScore
+    }
+
+    private fun repetitionScore(finishedReading : Int, untilFinish : Int) : Int {
+        val repetitionPoints = arrayOf(
+            arrayOf(3,1,0),
+            arrayOf(5,3,1)
+        )
+        val finalScore = repetitionPoints[untilFinish][finishedReading]
+        return finalScore
+    }
+
+    private fun evaluateRank(finalScore : Int) : String {
+        val difficulty = 10000
+        var rank = 0
+        var bound = difficulty
+        while (rank < 14 && finalScore >= bound) {
+            rank++
+            bound = 2 * bound + difficulty
+        }
+        val award = arrayOf("Bronze","Silver","Gold","Platinum","Diamond")
+        val finalRank = "${award[rank/3]} ${3-rank%3}"
+        return finalRank
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,11 +92,48 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
 
         firestore.collection("$userid").get().addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->
-                var point = firestore.collection("$userid").document("point").get().data ?: 0
-                var finalScore = actualityLevel(document.getString("publishedAt")
-                // finalScore *= readingIntensity("$userid")
-                point += finalScore
-                firestore.collection("$userid").document("point").set(point)
+                val articleid = document.getString("url")
+                val currentTime = System.currentTimeMillis().toInt()
+                val millisInADay = 86400000
+                var readingIntensity = mutableListOf(currentTime)
+                var finishedReading = 0
+                
+                // read all reading history
+                val userRating = firestore.collection("rating").document("$userid")
+                val readingHistory = userRating.collection("history")
+                readingHistory.get()
+                    .addOnSuccessListener{ docs ->
+                        for (doc in docs) {
+                            val readingTime = doc.getString("timestamp").toInt()
+                            if (readingTime > currentTime - 7 * millisInADay)
+                                readingIntensity.add(readingTime)
+                            if (doc.getString("articleid").equals(articleid))
+                                finishedReading = max(finishedReading, doc.getString("finished").toInt()+1)
+                        }
+                    }
+                
+                // evaluate reading score
+                var finalScore = actualityScore(document.getString("publishedAt"))
+                finalScore *= intensityScore(readingIntensity, currentTime)
+                finalScore *= repetitionScore(finishedReading, untilFinish)
+                userRating.get()
+                    .addOnSuccessListener{ doc ->
+                        finalScore += doc.getString("rating").toInt()
+                    }
+                
+                // save new record
+                val newRating = hashMapOf(
+                    "rating" to finalScore.toString(),
+                    "rank" to evaluateRank(finalScore)
+                )
+                userRating.set(newRating)
+                val newHistory = hashMapOf(
+                    "timestamp" to currentTime.toString(),
+                    "articleid" to articleid,
+                    "finished" to untilFinish.toString()
+                )
+                readingHistory.document(currentTime.toString()).set(newHistory)
+
                 val source = document.getString("source.id")?.let {
                     Source(
                         it,
